@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('clone repository') {
             steps {
-                git url: 'https://github.com/dawoodalam057/humanize-text.git', branch: 'main'
+                git url: 'https://github.com/Dawood679/humanize-text.git', branch: 'main'
                 
             }
         }
