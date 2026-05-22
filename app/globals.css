@@ -1,26 +1,240 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #f8f7ff;
+  --foreground: #1a1625;
+  --card: #ffffff;
+  --card-border: rgba(99, 102, 241, 0.12);
+  --muted: #6b7280;
+  --accent: #6366f1;
+  --accent-2: #a855f7;
+  --accent-3: #ec4899;
+  --accent-soft: #eef2ff;
+  --accent-glow: rgba(99, 102, 241, 0.25);
+  --gradient-from: #eef2ff;
+  --gradient-via: #faf5ff;
+  --gradient-to: #fdf4ff;
+  --hero-blob-1: rgba(99, 102, 241, 0.22);
+  --hero-blob-2: rgba(168, 85, 247, 0.18);
+  --hero-blob-3: rgba(236, 72, 153, 0.12);
+  --grid-line: rgba(99, 102, 241, 0.06);
+  --shadow-soft: 0 4px 24px rgba(99, 102, 241, 0.08);
+  --glass: rgba(255, 255, 255, 0.72);
+  --scrollbar-track: rgba(99, 102, 241, 0.08);
+  --scrollbar-thumb: rgba(99, 102, 241, 0.35);
+  --scrollbar-thumb-hover: rgba(99, 102, 241, 0.55);
+}
+
+.dark {
+  --background: #050508;
+  --foreground: #f4f2ff;
+  --card: rgba(22, 20, 38, 0.85);
+  --card-border: rgba(129, 140, 248, 0.18);
+  --muted: #9ca3af;
+  --accent: #818cf8;
+  --accent-2: #c084fc;
+  --accent-3: #f472b6;
+  --accent-soft: #1e1b4b;
+  --accent-glow: rgba(129, 140, 248, 0.35);
+  --gradient-from: #050508;
+  --gradient-via: #0c0a18;
+  --gradient-to: #120a24;
+  --hero-blob-1: rgba(99, 102, 241, 0.35);
+  --hero-blob-2: rgba(168, 85, 247, 0.28);
+  --hero-blob-3: rgba(236, 72, 153, 0.2);
+  --grid-line: rgba(129, 140, 248, 0.05);
+  --shadow-soft: 0 4px 40px rgba(0, 0, 0, 0.5);
+  --glass: rgba(12, 10, 24, 0.75);
+  --scrollbar-track: rgba(129, 140, 248, 0.1);
+  --scrollbar-thumb: rgba(129, 140, 248, 0.35);
+  --scrollbar-thumb-hover: rgba(168, 85, 247, 0.55);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-card: var(--card);
+  --color-muted: var(--muted);
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
+  --font-sans: var(--font-sans);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+@keyframes float {
+  0%, 100% { transform: translateY(0) translateX(0); }
+  33% { transform: translateY(-18px) translateX(8px); }
+  66% { transform: translateY(-8px) translateX(-12px); }
+}
+
+@keyframes float-slow {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-24px) scale(1.05); }
+}
+
+@keyframes gradient-shift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { opacity: 0.5; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.08); }
+}
+
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-float { animation: float 8s ease-in-out infinite; }
+.animate-float-slow { animation: float-slow 12s ease-in-out infinite; }
+.animate-float-delay { animation: float 10s ease-in-out 2s infinite; }
+.animate-fade-up { animation: fade-up 0.8s ease-out forwards; }
+.animate-fade-up-delay-1 { animation: fade-up 0.8s ease-out 0.15s forwards; opacity: 0; }
+.animate-fade-up-delay-2 { animation: fade-up 0.8s ease-out 0.3s forwards; opacity: 0; }
+.animate-fade-up-delay-3 { animation: fade-up 0.8s ease-out 0.45s forwards; opacity: 0; }
+.animate-spin-slow { animation: spin-slow 20s linear infinite; }
+.animate-marquee { animation: marquee 28s linear infinite; }
+
+.gradient-text-animated {
+  background: linear-gradient(
+    90deg,
+    var(--accent),
+    var(--accent-2),
+    var(--accent-3),
+    var(--accent-2),
+    var(--accent)
+  );
+  background-size: 300% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: gradient-shift 5s ease infinite;
+}
+
+.btn-shine {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-shine::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    105deg,
+    transparent 40%,
+    rgba(255, 255, 255, 0.25) 50%,
+    transparent 60%
+  );
+  transform: translateX(-100%);
+  transition: transform 0.6s ease;
+}
+
+.btn-shine:hover::after {
+  transform: translateX(100%);
+}
+
+.card-shine {
+  position: relative;
+  overflow: hidden;
+}
+
+.card-shine::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(
+    135deg,
+    transparent 30%,
+    var(--accent) 50%,
+    var(--accent-2) 70%,
+    transparent 90%
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.card-shine:hover::before {
+  opacity: 1;
+}
+
+/* Subtle themed scrollbars — does not affect page layout */
+html {
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+}
+
+html::-webkit-scrollbar {
+  width: 8px;
+}
+
+html::-webkit-scrollbar-track {
+  background: var(--scrollbar-track);
+}
+
+html::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb);
+  border-radius: 999px;
+}
+
+html::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-thumb-hover);
+}
+
+/* Dashboard input / output / sidebar */
+.soft-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+}
+
+.soft-scrollbar::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+
+.soft-scrollbar::-webkit-scrollbar-track {
+  background: var(--scrollbar-track);
+  border-radius: 999px;
+}
+
+.soft-scrollbar::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb);
+  border-radius: 999px;
+}
+
+.soft-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-thumb-hover);
+}
+
+.soft-scrollbar::-webkit-scrollbar-corner {
+  background: transparent;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans), system-ui, sans-serif;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
