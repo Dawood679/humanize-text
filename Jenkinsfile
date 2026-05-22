@@ -9,7 +9,7 @@ pipeline {
         }
         stage('build docker image') {
             steps {
-                sh "docker build -t humanize-text ."
+                sh "docker build -t dawoodalam057/humanize-text:latest ."
             }
         }
         stage("login to docker hub") {
