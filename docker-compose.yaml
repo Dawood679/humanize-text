@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   humanize-text:
-    build: dawoodalam057/humanize-text:latest
+    image: dawoodalam057/humanize-text:latest
     ports:
       - 3000:3000
     env_file:
