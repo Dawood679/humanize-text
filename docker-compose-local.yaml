@@ -4,7 +4,7 @@ services:
   humanize-text:
     build: .
     ports:
-      - 5000:3000
+      - 5000:4000
     env_file:
       - .env
     restart: always
