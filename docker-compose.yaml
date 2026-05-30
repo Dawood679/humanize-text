@@ -2,13 +2,10 @@ version: '3.8'
 
 services:
   humanize-text:
-    build:
-      context: dawoodalam057/humanize-text
-      dockerfile: Dockerfile
+    image: dawoodalam057/humanize-text:latest
     ports:
-      - 3000:3000
-    env-file:
+      - 4000:4000
+    env_file:
       - .env
-    system:
-      restart: always
+    restart: always
     

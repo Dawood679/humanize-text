@@ -3,18 +3,18 @@ pipeline {
     stages {
         stage('clone repository') {
             steps {
-                git url: 'https://github.com/dawoodalam057/humanize-text.git', branch: 'main'
+                git url: 'https://github.com/Dawood679/humanize-text.git', branch: 'main'
                 
             }
         }
         stage('build docker image') {
             steps {
-                sh "docker build -t humanize-text ."
+                sh "docker build -t dawoodalam057/humanize-text:latest ."
             }
         }
         stage("login to docker hub") {
             steps {
-                withCredentials([usernamePassword(credentialsId: 'docker-hub-credentials', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {    
+                withCredentials([usernamePassword(credentialsId: 'dockerhub-creds', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {    
                     sh "docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD"
                 }
             }
@@ -27,8 +27,8 @@ pipeline {
         }
         stage('deploy docker image') {
             steps {
-                sh "docker-compose down"
-                sh "docker-compose up -d"
+                sh "docker compose down"
+                sh "docker compose up -d"
             }
         }
         stage('Done ') {
